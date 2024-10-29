@@ -30,6 +30,7 @@ created - datetime - дата создания заказа
 Так же, существует некая сторонняя api.site.com. API писать не нужно, возвращаемые данные можно замокать и возвращать в случайном порядке. в которой нужно сделать бронь заказа отправив ей (https://api.site.com/book) event_id, event_date, ticket_adult_price, ticket_adult_quantity, ticket_kid_price, ticket_kid_quantity, barcode. На что она может вернуть либо {message: 'order successfully booked'}, либо {error: 'barcode already exists'}. В случае если получаем ошибку, нужно сгенерировать новый barcode и повторить попытку. Важно учесть, если запрос будет происходить одновременно, не должно возникнуть такой ситуации, что двум разным заказам присвоился один номер.
 После успешной брони, нужно отправить на стороннюю апи запрос с подтверждением (https://api.site.com/approve), который принимает только barcode. Ответов может быть 2 варианта - успешный: {message: 'order successfully aproved'} и различные варианты ошибок {error: 'event cancelled'}, {error: 'no tickets'}, {error: 'no seats'}, {error: 'fan removed'}. В случае успеха, сохраняем заказ в БД
 
+Программу развертывал на следующих технологиях: Docker-контейнер lamp (mariadb, nginx, php-fmp, phpmyadmin) 
 Выжимка задания
 	Функция должна:
 Сгенерировать уникальный barcode — случайный набор цифр, который не является порядковым.
